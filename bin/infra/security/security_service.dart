@@ -5,4 +5,5 @@ abstract class SecurityService<T> {
   Future<T?> validateJWT(String token);
 
   Middleware get verifyJwt;
+  Middleware get authorization;
 }
