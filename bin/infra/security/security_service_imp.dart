@@ -57,6 +57,8 @@ class SecurityServiceImp implements SecurityService<JWT> {
 
   @override
   Middleware get verifyJwt => createMiddleware(requestHandler: (Request req) {
+        if (req.url.path == 'login') return null;
+
         if (req.context['jwt'] == null) {
           return Response.forbidden('Not Authorized');
         }

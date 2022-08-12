@@ -12,6 +12,8 @@ void main(List<String> args) async {
   //comentar para desativar o .env de desenvolvimento
   CustomEnv.fromFile('.env-dev');
 
+  SecurityServiceImp _securityService = SecurityServiceImp();
+
   var cascadeHandler = Cascade()
       .add(LoginApi(SecurityServiceImp()).handler)
       .add(NewsApi(NewsService()).handler)
@@ -20,8 +22,8 @@ void main(List<String> args) async {
   var handler = Pipeline()
       .addMiddleware(logRequests())
       .addMiddleware(MiddlewareInterception().middleware)
-      .addMiddleware(SecurityServiceImp().authorization)
-      .addMiddleware(SecurityServiceImp().verifyJwt)
+      .addMiddleware(_securityService.authorization)
+      .addMiddleware(_securityService.verifyJwt)
       .addHandler(cascadeHandler);
 
   CustomServer().initialize(
