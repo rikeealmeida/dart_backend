@@ -20,6 +20,8 @@ void main(List<String> args) async {
   var handler = Pipeline()
       .addMiddleware(logRequests())
       .addMiddleware(MiddlewareInterception().middleware)
+      .addMiddleware(SecurityServiceImp().authorization)
+      .addMiddleware(SecurityServiceImp().verifyJwt)
       .addHandler(cascadeHandler);
 
   CustomServer().initialize(
